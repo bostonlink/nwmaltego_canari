@@ -38,6 +38,9 @@ Once you have the Canari framework installed and working, follow the directions 
 Before installing the nwmaltego canari package you must edit the nwmaltego_canari.conf file with the prropriate credentials
 and netwitness information such as hostname/ip address and REST API URL.  Then you can install the package and go to town!
 
+```bash
+$vim nwmaltego_canari/src/nwmaltego_canari/resources/etc/nwmaltego_canari.conf
+```
 Install the package:
 
 ```bash
