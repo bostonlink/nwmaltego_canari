@@ -35,12 +35,6 @@ See: https://github.com/allfro/canari
 ### 2.3 - How to install
 Once you have the Canari framework installed and working, follow the directions below to install nwmaltego_canari
 
-Before installing the nwmaltego canari package you must edit the nwmaltego_canari.conf file with the prropriate credentials
-and netwitness information such as hostname/ip address and REST API URL.  Then you can install the package and go to town!
-
-```bash
-$ vim nwmaltego_canari/src/nwmaltego_canari/resources/etc/nwmaltego_canari.conf
-```
 Install the package:
 
 ```bash
@@ -52,7 +46,12 @@ Then install the canari package by issuing the following:
 ```bash
 $ canari install-package nwmaltego_canari
 ```
+Once installed you must edit the nwmaltego_canari.conf file with the appropriate credentials
+and netwitness information such as hostname/ip address and REST API URL. Have fun and go to town!
 
+```bash
+$ vim nwmaltego_canari/nwmaltego_canari.conf
+```
 # Special Thanks!
 
 Rich Popson (@Rastafari0728)<br/>
