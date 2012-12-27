@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+from datetime import datetime, timedelta
 
 from common.entities import NWThreat, NWFiletype
 from canari.framework import configure
@@ -36,8 +37,13 @@ def dotransform(request, response):
 
     file_type = request.value
 
+    date_t = datetime.today()
+    tdelta = timedelta(days=1)
+    diff = date_t - tdelta
+    diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
+
     field_name = 'risk.warning'
-    where_clause = 'filetype="%s"' % file_type
+    where_clause = '(time=%s) && filetype="%s"' % (diff, file_type)
 
     json_data = json.loads(nwmodule.nwValue(0, 0, 25, field_name, 'application/json', where_clause))
     threat_list = []

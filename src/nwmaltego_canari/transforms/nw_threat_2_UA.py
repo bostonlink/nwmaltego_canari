@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+from datetime import datetime, timedelta
 
 from common.entities import NWThreat, NWUserAgent
 from canari.framework import configure
@@ -34,12 +35,17 @@ def dotransform(request, response):
     # NW REST API Query and results
 
     risk_name = request.value
+    
+    date_t = datetime.today()
+    tdelta = timedelta(days=1)
+    diff = date_t - tdelta
+    diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
 
     if 'ip' in request.fields:
         ip_entity = request.fields['ip']
-        where_clause = 'risk.warning="%s" && ip.src=%s || ip.dst=%s' % (risk_name, ip_entity, ip_entity)
+        where_clause = '(time=%s) && risk.warning="%s" && ip.src=%s || ip.dst=%s' % (diff, risk_name, ip_entity, ip_entity)
     else:
-        where_clause = 'risk.warning="%s"' % risk_name
+        where_clause = '(time=%s) && risk.warning="%s"' % (diff, risk_name)
 
     field_name = 'client'
     json_data = json.loads(nwmodule.nwValue(0, 0, 10, field_name, 'application/json', where_clause))

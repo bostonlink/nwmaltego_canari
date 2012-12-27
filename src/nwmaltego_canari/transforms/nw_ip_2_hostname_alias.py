@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+from datetime import datetime, timedelta
 
 from canari.maltego.entities import IPv4Address, Domain
 from canari.framework import configure
@@ -36,8 +37,13 @@ def dotransform(request, response):
 
     ip_entity = request.value
 
+    date_t = datetime.today()
+    tdelta = timedelta(days=1)
+    diff = date_t - tdelta
+    diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
+
     field_name = 'alias.host'
-    where_clause = 'ip.src=%s || ip.dst=%s' % (ip_entity, ip_entity)
+    where_clause = '(time=%s) && ip.src=%s || ip.dst=%s' % (diff, ip_entity, ip_entity)
 
     json_data = json.loads(nwmodule.nwValue(0, 0, 25, field_name, 'application/json', where_clause))
     host_list = []

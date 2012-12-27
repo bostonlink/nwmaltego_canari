@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+from datetime import datetime, timedelta
 
 from canari.maltego.entities import Phrase
 from common.entities import NWThreat
@@ -36,7 +37,13 @@ def dotransform(request, response):
     # NW REST API Query and results
 
     phrase = request.value
-    query = 'select risk.warning where risk.warning contains %s' % phrase
+
+    date_t = datetime.today()
+    tdelta = timedelta(days=1)
+    diff = date_t - tdelta
+    diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
+
+    query = 'select risk.warning where (time=%s) && risk.warning contains %s' % (diff, phrase)
 
     json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 25))
     threat_list = []

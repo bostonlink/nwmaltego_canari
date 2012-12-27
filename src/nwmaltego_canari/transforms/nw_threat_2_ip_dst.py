@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+from datetime import datetime, timedelta
 
 from common.entities import NWThreat
 from canari.maltego.entities import IPv4Address
@@ -36,11 +37,16 @@ def dotransform(request, response):
 
     risk_name = request.value
 
+    date_t = datetime.today()
+    tdelta = timedelta(days=1)
+    diff = date_t - tdelta
+    diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
+
     if 'ip' in request.fields:
         ip = request.fields['ip']
-        query = 'select ip.dst where risk.warning="%s" && ip.src=%s' % (risk_name, ip)
+        query = 'select ip.dst where (time=%s) && risk.warning="%s" && ip.src=%s' % (diff, risk_name, ip)
     else:
-        query = 'select ip.dst where risk.warning="%s"' % risk_name
+        query = 'select ip.dst where (time=%s) && risk.warning="%s"' % (diff, risk_name)
 
     json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 10))
     ip_list = []
