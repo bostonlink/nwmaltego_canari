@@ -5,6 +5,8 @@ Author: David Bressler (@bostonlink)
 
 ## 1.0 - About
 
+Demo Video: http://youtu.be/3XdEtkTsrU4
+
 nwmaltego_canari is a port of the NWmaltego project into a canari framework package.  The reason for the port is to
 make installing, using, and modifying the nwmaltego transforms much easier.  The Canari framework is a Maltego local
 transform framework created for rapid development and deployment of Maltego transforms.
