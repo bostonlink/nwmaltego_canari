@@ -44,7 +44,7 @@ def dotransform(request, response):
     diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
 
     field_name = 'risk.warning'
-    where_clause = '(time=%s) && ip.src=%s || ip.dst=%s' % (ip_entity, ip_entity)
+    where_clause = '(time=%s) && ip.src=%s || ip.dst=%s' % (diff, ip_entity, ip_entity)
 
     json_data = json.loads(nwmodule.nwValue(0, 0, 25, field_name, 'application/json', where_clause))
     threat_list = []
