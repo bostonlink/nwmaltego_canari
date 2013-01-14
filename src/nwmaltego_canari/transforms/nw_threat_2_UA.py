@@ -26,6 +26,7 @@ __all__ = [
     description='Returns user-agents associated with the specified threat from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessThreattoUA_Netwitness' ],
     inputs=[ ( 'Netwitness', NWThreat ) ],
+    debug=False
 )
 
 def dotransform(request, response):

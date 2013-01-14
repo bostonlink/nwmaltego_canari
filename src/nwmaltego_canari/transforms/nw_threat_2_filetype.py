@@ -26,7 +26,7 @@ __all__ = [
     description='Returns filetypes associated with the specified threat from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessThreattoFiletype_Netwitness' ],
     inputs=[ ( 'Netwitness', NWThreat ) ],
-    debug=True
+    debug=False
 )
 
 def dotransform(request, response):

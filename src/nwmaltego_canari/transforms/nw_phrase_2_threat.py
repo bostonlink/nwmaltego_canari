@@ -27,7 +27,7 @@ __all__ = [
     description='Returns threats associated with the specified phrase from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessPhrasetoThreat_Netwitness' ],
     inputs=[ ( 'Netwitness', Phrase ) ],
-    debug=True
+    debug=False
 )
 
 def dotransform(request, response):

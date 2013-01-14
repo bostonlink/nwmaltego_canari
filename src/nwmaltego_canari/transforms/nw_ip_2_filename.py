@@ -27,7 +27,7 @@ __all__ = [
     description='Returns file names associated with the specified IP address from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessIPToFilename_Netwitness' ],
     inputs=[ ( 'Netwitness', IPv4Address ) ],
-    debug=True
+    debug=False
 )
 
 def dotransform(request, response):

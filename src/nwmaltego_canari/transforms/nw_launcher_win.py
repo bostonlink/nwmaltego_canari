@@ -26,7 +26,7 @@ __all__ = [
     description='Launches netwitness Investigator and queries the specified IP address',
     uuids=[ 'netwitness.v2.NetwitnessLaunchInvestigator_Netwitness' ],
     inputs=[ ( 'Netwitness', IPv4Address ) ],
-    debug=True
+    debug=False
 )
 
 # Must test against a Windows system - Consider this function unstable at the moment.

@@ -28,7 +28,7 @@ __all__ = [
     description='Returns threats associated with the specified IP source and/or destination address from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessIPtoThreat_Netwitness' ],
     inputs=[ ( 'Netwitness', IPv4Address ) ],
-    debug=True
+    debug=False
 )
 
 def dotransform(request, response):

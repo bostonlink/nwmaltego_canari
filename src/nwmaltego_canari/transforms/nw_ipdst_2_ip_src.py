@@ -26,7 +26,7 @@ __all__ = [
     description='Returns IP source addresses associated with the specified IP address from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessIPdstToIPsrc_Netwitness' ],
     inputs=[ ( 'Netwitness', IPv4Address ) ],
-    debug=True
+    debug=False
 )
 
 def dotransform(request, response):
