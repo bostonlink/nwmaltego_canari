@@ -50,14 +50,7 @@ def dotransform(request, response):
 
     for d in json_data['results']['fields']:
         if d['value'] not in ip_list:
-            response += IPv4Address(
-                d['value'].decode('ascii'),
-                riskname = risk_name,
-                metaid1=d['id1'],
-                metaid2=d['id2'],
-                type_=d['type'],
-                count=d['count']
-            )
+            response += IPv4Address(d['value'].decode('ascii'))
             ip_list.append(d['value'])
 
     return response

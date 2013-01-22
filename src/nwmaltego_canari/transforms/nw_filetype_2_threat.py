@@ -1,14 +1,15 @@
 #!/usr/bin/env python
 
 import json
-from datetime import datetime, timedelta
 
+from datetime import datetime, timedelta
+from canari.maltego.entities import Phrase
 from common.entities import NWThreat, NWFiletype
 from canari.framework import configure
 from common import nwmodule
 
 __author__ = 'bostonlink'
-__copyright__ = 'Copyright 2012, Netwitness Maltego Integration Project'
+__copyright__ = 'Copyright 2013, Netwitness Maltego Integration Project'
 __credits__ = []
 
 __license__ = 'GPL'
@@ -24,8 +25,8 @@ __all__ = [
 @configure(
     label='Filetype To Threat [Netwitness]',
     description='Returns threats associated with the specified file type from Netwitness.',
-    uuids=[ 'netwitness.v2.NetwitnessFileTypeToThreat_Netwitness' ],
-    inputs=[ ( 'Netwitness', NWFiletype ) ],
+    uuids=[ 'netwitness.v2.NetwitnessFileTypeToThreat_Netwitness', 'netwitness.v2.NetwitnessFileTypePhraseToThreat_Netwitness' ],
+    inputs=[ ( 'Netwitness', NWFiletype ), ('Netwitness', Phrase) ],
     debug=False
 )
 

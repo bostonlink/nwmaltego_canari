@@ -1,14 +1,14 @@
 #!/usr/bin/env python
 
 import json
-from datetime import datetime, timedelta
 
+from datetime import datetime, timedelta
 from common.entities import NWFilename, NWFiletype
 from canari.framework import configure
 from common import nwmodule
 
 __author__ = 'bostonlink'
-__copyright__ = 'Copyright 2012, Netwitness Maltego Integration Project'
+__copyright__ = 'Copyright 2013, Netwitness Maltego Integration Project'
 __credits__ = []
 
 __license__ = 'GPL'
@@ -24,7 +24,7 @@ __all__ = [
 @configure(
     label='Filetype To Filename [Netwitness]',
     description='Returns file names associated with the specified file type from Netwitness.',
-    uuids=[ 'netwitness.v2.NetwitnessFilenameToFileType_Netwitness' ],
+    uuids=[ 'netwitness.v2.NetwitnessFiletypeToFileName_Netwitness' ],
     inputs=[ ( 'Netwitness', NWFiletype ) ],
     debug=False
 )
