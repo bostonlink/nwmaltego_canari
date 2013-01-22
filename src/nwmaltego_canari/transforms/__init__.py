@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __author__ = 'bostonlink'
-__copyright__ = 'Copyright 2012, Nwmaltego_canari Project'
+__copyright__ = 'Copyright 2013, Nwmaltego_canari Project'
 __credits__ = []
 
 __license__ = 'GPL'
@@ -21,7 +21,7 @@ __all__ = [
     'nw_ip_src_threat',
     'nw_ipdst_2_ip_src',
     'nw_ipsrc_2_ip_dst',
-    'nw_ipsrc_dst_threat',
+    'nw_ip_2_threat',
     'nw_phrase_2_threat',
     'nw_threat_2_file_attachment',
     'nw_threat_2_filename',

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+
 import json
 from datetime import datetime, timedelta
 
@@ -23,9 +24,9 @@ __all__ = [
 ]
 
 @configure(
-    label='IP Destination To Threat [Netwitness]',
-    description='Returns threats associated with the specified destination IP address from Netwitness.',
-    uuids=[ 'netwitness.v2.NetwitnessIPdstToThreat_Netwitness' ],
+    label='IP To Threat [Netwitness]',
+    description='Returns threats associated with the specified IP source and/or destination address from Netwitness.',
+    uuids=[ 'netwitness.v2.NetwitnessIPtoThreat_Netwitness' ],
     inputs=[ ( 'Netwitness', IPv4Address ) ],
     debug=False
 )
@@ -44,7 +45,7 @@ def dotransform(request, response):
     diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
 
     field_name = 'risk.warning'
-    where_clause = '(time=%s) && ip.dst=%s' % (diff, ip_entity)
+    where_clause = '(time=%s) && ip.src=%s || ip.dst=%s' % (diff, ip_entity, ip_entity)
 
     json_data = json.loads(nwmodule.nwValue(0, 0, 25, field_name, 'application/json', where_clause))
     threat_list = []
