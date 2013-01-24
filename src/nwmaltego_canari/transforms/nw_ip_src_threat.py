@@ -23,9 +23,9 @@ __all__ = [
 ]
 
 @configure(
-    label='IP Destination To Threat [Netwitness]',
-    description='Returns threats associated with the specified destination IP address from Netwitness.',
-    uuids=[ 'netwitness.v2.NetwitnessIPdstToThreat_Netwitness' ],
+    label='IP Source To Threat [Netwitness]',
+    description='Returns threat associated with the specified source IP address from Netwitness.',
+    uuids=[ 'netwitness.v2.NetwitnessIPsrcToThreat_Netwitness' ],
     inputs=[ ( 'Netwitness', IPv4Address ) ],
     debug=False
 )
