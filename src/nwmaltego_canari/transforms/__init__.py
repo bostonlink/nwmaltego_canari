@@ -29,5 +29,6 @@ __all__ = [
     'nw_threat_2_ip_all',
     'nw_threat_2_ip_dst',
     'nw_threat_2_ip_src',
-    'nw_threat_2_UA'
+    'nw_threat_2_UA',
+    'nw_launcher_win'
 ]
