@@ -46,7 +46,7 @@ def dotransform(request, response):
         ip = request.fields['ip']
         where_clause = '(time=%s) && risk.warning="%s" && ip.src=%s || ip.dst=%s' % (diff, risk_name, ip, ip)
     else:
-        where_clause = 'risk.warning="%s"' % (diff, risk_name)
+        where_clause = '(time=%s) && risk.warning="%s"' % (diff, risk_name)
 
     field_name = 'filetype'
     json_data = json.loads(nwmodule.nwValue(0, 0, 25, field_name, 'application/json', where_clause))
