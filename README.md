@@ -5,7 +5,7 @@ Author: David Bressler (@bostonlink)
 
 ## 1.0 - About
 
-Demo Video: http://youtu.be/3XdEtkTsrU4
+Demo Video: http://youtu.be/3XdEtkTsrU4<br/>
 Second Demo Video (walkthrough): http://www.youtube.com/watch?v=C7u0z6I_EXE
 
 nwmaltego_canari is a port of the NWmaltego project into a canari framework package.  The reason for the port is to
@@ -47,13 +47,24 @@ $ python setup.py install
 Then install the canari package by issuing the following:
 
 ```bash
-$ canari install-package nwmaltego_canari
+$ canari create-profile nwmaltego_canari
 ```
+Then do the following (thanks to Nadeem Douba @ndouba):
+
+INSTRUCTIONS:
+
+1. Open Maltego.
+2. Click on the home button (Maltego icon, top-left corner).
+3. Click on 'Import'.
+4. Click on 'Import Configuration'.
+5. Follow prompts.
+6. Enjoy!
+
 Once installed you must edit the nwmaltego_canari.conf file with the appropriate credentials
 and netwitness information such as hostname/ip address and REST API URL. Have fun and go to town!
 
 ```bash
-$ vim nwmaltego_canari/nwmaltego_canari.conf
+$ vim ~/.canari/nwmaltego_canari.conf
 ```
 # Special Thanks!
 
