@@ -2,10 +2,10 @@
 
 import json
 from datetime import datetime, timedelta
-
 from canari.maltego.entities import Phrase
 from common.entities import NWThreat
 from canari.framework import configure
+from canari.config import config
 from common import nwmodule
 
 __author__ = 'bostonlink'
@@ -37,7 +37,7 @@ def dotransform(request, response):
     # NW REST API Query and results
 
     phrase = request.value
-    diff = nemodule.nwtime(config['netwitness/days'])
+    diff = nwmodule.nwtime(config['netwitness/days'])
     query = 'select risk.warning where (time=%s) && risk.warning contains %s' % (diff, phrase)
 
     json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 25))

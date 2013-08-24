@@ -35,7 +35,7 @@ def dotransform(request, response):
     # NW REST API Query and results
 
     file_type = request.value
-    diff = nemodule.nwtime(config['netwitness/days'])
+    diff = nwmodule.nwtime(config['netwitness/days'])
     field_name = 'filename'
     where_clause = '(time=%s) && filetype="%s"' % (diff, file_type)
 

@@ -2,9 +2,9 @@
 
 import json
 from datetime import datetime, timedelta
-
 from canari.maltego.entities import IPv4Address, Domain
 from canari.framework import configure
+from canari.config import config
 from common import nwmodule
 
 __author__ = 'bostonlink'
@@ -36,7 +36,7 @@ def dotransform(request, response):
     # NW REST API Query and results
 
     ip_entity = request.value
-    diff = nemodule.nwtime(config['netwitness/days'])
+    diff = nwmodule.nwtime(config['netwitness/days'])
     field_name = 'alias.host'
     where_clause = '(time=%s) && ip.src=%s || ip.dst=%s' % (diff, ip_entity, ip_entity)
 
