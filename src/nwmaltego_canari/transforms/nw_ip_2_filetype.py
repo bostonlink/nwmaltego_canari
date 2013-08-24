@@ -37,12 +37,7 @@ def dotransform(request, response):
     # NW REST API Query and results
 
     ip_entity = request.value
-
-    date_t = datetime.today()
-    tdelta = timedelta(days=1)
-    diff = date_t - tdelta
-    diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
-
+    diff = nemodule.nwtime(config['netwitness/days'])
     field_name = 'filetype'
     where_clause = '(time=%s) && ip.src=%s || ip.dst=%s' % (diff, ip_entity, ip_entity)
 

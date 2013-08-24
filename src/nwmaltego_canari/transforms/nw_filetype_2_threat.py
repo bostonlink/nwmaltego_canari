@@ -37,12 +37,7 @@ def dotransform(request, response):
     # NW REST API Query amd results
 
     file_type = request.value
-
-    date_t = datetime.today()
-    tdelta = timedelta(days=1)
-    diff = date_t - tdelta
-    diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
-
+    diff = nemodule.nwtime(config['netwitness/days'])
     field_name = 'risk.warning'
     where_clause = '(time=%s) && filetype="%s"' % (diff, file_type)
 

@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
 import json
-
 from datetime import datetime, timedelta
 from common.entities import NWFilename, NWFiletype
 from canari.framework import configure
+from canari.config import config
 from common import nwmodule
 
 __author__ = 'bostonlink'
@@ -35,12 +35,7 @@ def dotransform(request, response):
     # NW REST API Query and results
 
     file_type = request.value
-
-    date_t = datetime.today()
-    tdelta = timedelta(days=1)
-    diff = date_t - tdelta
-    diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
-
+    diff = nemodule.nwtime(config['netwitness/days'])
     field_name = 'filename'
     where_clause = '(time=%s) && filetype="%s"' % (diff, file_type)
 

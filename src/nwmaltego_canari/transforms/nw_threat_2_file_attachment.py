@@ -36,11 +36,7 @@ def dotransform(request, response):
     # NW REST API Query and results
 
     risk_name = request.value
-
-    date_t = datetime.today()
-    tdelta = timedelta(days=1)
-    diff = date_t - tdelta
-    diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
+    diff = nemodule.nwtime(config['netwitness/days'])
 
     if 'ip' in request.fields:
         ip = request.fields['ip']

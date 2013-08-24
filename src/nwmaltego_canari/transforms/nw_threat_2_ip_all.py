@@ -37,12 +37,7 @@ def dotransform(request, response):
     # NW REST API Query and results
 
     risk_name = request.value
-
-    date_t = datetime.today()
-    tdelta = timedelta(days=1)
-    diff = date_t - tdelta
-    diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
-
+    diff = nemodule.nwtime(config['netwitness/days'])
     query = 'select ip.dst,ip.src where (time=%s) && risk.warning="%s"' % (diff, risk_name)
 
     json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 10))
