@@ -49,13 +49,6 @@ def nw_http_auth():
 	urllib2.install_opener(opener)
 
 # Function builds full URL for NW REST API Query and returns the results
-#
-# Sample query examples that can be passed to the nwQuery module
-# query = 'select service,ip.src,country.dst where service=80'
-# pe_java_query = 'select filename,ip.src,ip.dst where filetype="x86 pe","java_jar"'
-# all_pe_query = 'select filename,ip.src,ip.dst where filetype="x86 pe"'
-# ip_exe_query = 'select filename,ip.src,ip.dst where filetype="x86 pe","java_jar" && (ip.src=1.1.1.1)'
-
 
 def get_http_data(full_url):
 	try:
@@ -66,6 +59,20 @@ def get_http_data(full_url):
 	except urllib2.HTTPError as e:
 		raise MaltegoException("The Transform has returned: %s" % e)
 
+# function that adds date and time to queries
+
+def nwtime(days):
+	date_t = datetime.today()
+	tdelta = timedelta(days=days)
+	diff = date_t - tdelta
+	diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"
+	return diff
+
+# Sample query examples that can be passed to the nwQuery module
+# query = 'select service,ip.src,country.dst where service=80'
+# pe_java_query = 'select filename,ip.src,ip.dst where filetype="x86 pe","java_jar"'
+# all_pe_query = 'select filename,ip.src,ip.dst where filetype="x86 pe"'
+# ip_exe_query = 'select filename,ip.src,ip.dst where filetype="x86 pe","java_jar" && (ip.src=1.1.1.1)'
 
 def nwQuery(id1, id2, query_string, cType, size):
 
