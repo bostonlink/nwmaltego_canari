@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import json
-from datetime import datetime, timedelta
 from common.entities import NWFilename, NWThreat
 from canari.framework import configure
 from canari.config import config

@@ -9,6 +9,7 @@
 import urllib2, urllib
 
 from os import path
+from datetime import datetime, timedelta
 from canari.config import config
 from canari.easygui import multpasswordbox
 from canari.utils.fs import cookie, fsemaphore

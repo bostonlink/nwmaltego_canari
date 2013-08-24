@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import json
-from datetime import datetime, timedelta
 from canari.maltego.entities import Phrase
 from common.entities import NWThreat, NWFiletype
 from canari.framework import configure

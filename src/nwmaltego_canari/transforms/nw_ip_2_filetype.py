@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import json
-from datetime import datetime, timedelta
 from canari.maltego.entities import IPv4Address
 from common.entities import NWFiletype
 from canari.framework import configure
