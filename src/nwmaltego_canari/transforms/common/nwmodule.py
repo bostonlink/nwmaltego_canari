@@ -9,6 +9,10 @@
 import urllib
 import requests
 import os
+import ssl
+
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.poolmanager import PoolManager
 from datetime import datetime, timedelta
 from canari.config import config
 from canari.easygui import multpasswordbox
@@ -46,10 +50,24 @@ def get_creds():
 
     return nwu, nwp
 
+
+class TLSv1HttpAdapter(HTTPAdapter):
+    """"Transport adapter" that allows us to use TLSv1."""
+
+    def init_poolmanager(self, connections, maxsize, block=False):
+        self.poolmanager = PoolManager(num_pools=connections,
+                                       maxsize=maxsize,
+                                       block=block,
+                                       ssl_version=ssl.PROTOCOL_TLSv1)
+
+
 def get_http(full_url, nwu, nwpass):
     try:
-        header = {'WWW-Authenticate': 'Basic realm="Netwitness"'}
-        r = requests.get(full_url, headers=header, auth=(nwu, nwpass))
+        s = requests.Session()
+        s.mount('https://', TLSv1HttpAdapter())
+        s.auth = (nwu, nwpass)
+        s.headers.update({'WWW-Authenticate': 'Basic realm="Netwitness"'})
+        r = s.get(full_url, verify=False)
         return r.content
     except Exception as e:
         raise MaltegoException("The Transform has returned: %s" % e)
