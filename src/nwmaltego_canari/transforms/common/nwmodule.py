@@ -6,9 +6,9 @@
 # Author: David Bressler
 # Netwitness python functions to interface with the NW REST API
 
-import urllib2, urllib
-
-from os import path
+import urllib
+import requests
+import os
 from datetime import datetime, timedelta
 from canari.config import config
 from canari.easygui import multpasswordbox
@@ -17,47 +17,41 @@ from canari.maltego.message import MaltegoException
 
 def get_creds():
     fn = cookie('netwitness')
-    if not path.exists(fn):
-        f = fsemaphore(fn, 'wb')
-        f.lockex()
-        msg = 'Please enter your Netwitness credentials'
-        fv = multpasswordbox(msg, 'Netwitness Credentials', ['Username:', 'Password:'])
-        nwu, nwp = fv
-        f.write('username=%s#password=%s' % (nwu, nwp))
+    if not os.path.exists(fn):
+        with fsemaphore(fn, 'wb') as f:
+            f.lockex()
+            while True:
+                msg = 'Please enter your Netwitness credentials'
+                fv = multpasswordbox(msg, 'Netwitness Credentials', ['Username:', 'Password:']) 
+                if not fv:
+                    f.close()
+                    os.unlink(fn)
+                    return
+
+                nwu, nwp = fv
+                f.write('username=%s#password=%s' % (nwu, nwp))
+                break
+
     else:
-        f = fsemaphore(fn)
-        f.locksh()
-        creds = f.read().split('#')
-        for i in creds:
-            if 'username' in i:
-                parse = i.split('=')
-                nwu = parse[1]
-            if 'password' in i:
-                parse = i.split('=')
-                nwp = parse[1]
+        with fsemaphore(fn) as f:
+            f.locksh()
+            creds = f.read().split('#')
+            for i in creds:
+                if 'username' in i:
+                    parse = i.split('=')
+                    nwu = parse[1]
+                if 'password' in i:
+                    parse = i.split('=')
+                    nwp = parse[1]
+
     return nwu, nwp
 
-def nw_http_auth():
-    """Authenticates to the NW REST API via HTTP Basic authentication"""
-    nwu, nwp = get_creds()
-    auth_handler = urllib2.HTTPBasicAuthHandler()
-    auth_handler.add_password(realm = 'NetWitness',
-                              uri = config['netwitness/nw_concentrator'],
-                              user = nwu,
-                              passwd = nwp )
-
-    opener = urllib2.build_opener(auth_handler)
-    urllib2.install_opener(opener)
-
-# Function builds full URL for NW REST API Query and returns the results
-
-def get_http_data(full_url):
+def get_http(full_url, nwu, nwpass):
     try:
-        req = urllib2.Request(full_url)
-        ret = urllib2.urlopen(req)
-        ret_data = ret.read()
-        return ret_data
-    except urllib2.HTTPError as e:
+        header = {'WWW-Authenticate': 'Basic realm="Netwitness"'}
+        r = requests.get(full_url, headers=header, auth=(nwu, nwpass))
+        return r.content
+    except Exception as e:
         raise MaltegoException("The Transform has returned: %s" % e)
 
 # function that adds date and time to queries
@@ -89,8 +83,9 @@ def nwQuery(id1, id2, query_string, cType, size):
 
     enc_params = urllib.urlencode(params_dic)
     full_url = nwa + base_uri + enc_params
+    nwu, nwp = get_creds()
 
-    return get_http_data(full_url)
+    return get_http(full_url, nwu, nwp)
 
 #  Retrieves the meta id range for the session range
 
@@ -106,8 +101,9 @@ def nwSession(id1, id2, cType):
 
     enc_params = urllib.urlencode(params_dic)
     full_url = nwa + base_uri + enc_params
+    nwu, nwp = get_creds()
 
-    return get_http_data(full_url)
+    return get_http(full_url, nwu, nwp)
 
 # values: Performs a query and returns the matching values for a report
 # example: nwValue(nwa, 0, 0, 100, 'risk.warning', 'text/plain')
@@ -129,8 +125,9 @@ def nwValue(id1, id2, size, fieldname, cType, where=''):
 
     enc_params = urllib.urlencode(params_dic)
     full_url = nwa + base_uri + enc_params
+    nwu, nwp = get_creds()
 
-    return get_http_data(full_url)
+    return get_http(full_url, nwu, nwp)
 
 
 # timeline: Returns the count of sessions/size/packets in discrete time intervals
@@ -147,8 +144,9 @@ def nwTimeline(time1, time2, size, cType, where=''):
 
     enc_params = urllib.urlencode(params_dic)
     full_url = nwa + base_uri + enc_params
+    nwu, nwp = get_creds()
 
-    return get_http_data(full_url)
+    return get_http(full_url, nwu, nwp)
 
 
 # Returns all queryable fields and definitions wtihin NW
@@ -163,5 +161,6 @@ def nwLanguage(cType):
 
     enc_params = urllib.urlencode(params_dic)
     full_url = nwa + base_uri + enc_params
+    nwu, nwp = get_creds()
 
-    return get_http_data(full_url)
+    return get_http(full_url, nwu, nwp)

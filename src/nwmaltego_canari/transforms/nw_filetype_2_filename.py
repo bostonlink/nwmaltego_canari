@@ -30,7 +30,7 @@ __all__ = [
 )
 def dotransform(request, response):
 
-    nwmodule.nw_http_auth()
+    #nwmodule.nw_http_auth()
 
     # NW REST API Query and results
 
@@ -55,6 +55,3 @@ def dotransform(request, response):
             file_list.append(d['value'])
 
     return response
-
-
-

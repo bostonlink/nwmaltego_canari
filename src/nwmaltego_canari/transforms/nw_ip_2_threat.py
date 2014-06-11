@@ -32,7 +32,7 @@ __all__ = [
 
 def dotransform(request, response):
 
-    nwmodule.nw_http_auth()
+    #nwmodule.nw_http_auth()
 
     # NW REST API Query and results
 
