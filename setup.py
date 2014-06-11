@@ -13,7 +13,7 @@ setup(
     package_data={
         '' : [ '*.gif', '*.png', '*.conf', '*.mtz', '*.machine' ] # list of resources
     },
-    install_requires=[
+    install_requires=[ 'requests'
         # Name of packages required for easy_install
     ],
     dependency_links=[

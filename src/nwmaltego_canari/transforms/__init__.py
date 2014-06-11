@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 __author__ = 'bostonlink'
-__copyright__ = 'Copyright 2013, Nwmaltego_canari Project'
+__copyright__ = 'Copyright 2014, Nwmaltego_canari Project'
 __credits__ = []
 
 __license__ = 'GPL'

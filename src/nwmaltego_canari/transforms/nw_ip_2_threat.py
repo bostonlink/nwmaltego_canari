@@ -9,7 +9,7 @@ from canari.config import config
 from common import nwmodule
 
 __author__ = 'bostonlink'
-__copyright__ = 'Copyright 2012, Netwitness Maltego Integration Project'
+__copyright__ = 'Copyright 2014, Netwitness Maltego Integration Project'
 __credits__ = []
 
 __license__ = 'GPL'
