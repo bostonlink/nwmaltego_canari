@@ -30,10 +30,7 @@ __all__ = [
     inputs=[ ( 'Netwitness', IPv4Address ) ],
     debug=False
 )
-
-# Must test against a Windows system - Consider this function unstable at the moment.
-
-def dotransform(request, response):
+def dotransform(request, response, config):
     ip_entity = request.value
     where_clause = 'ip.src=%s || ip.dst=%s' % (ip_entity, ip_entity)
     base_url = "nw://%s/?collection=%s&" % (config['netwitness/concentrator_ip'], config['netwitness/collection_name'])

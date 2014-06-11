@@ -27,10 +27,7 @@ __all__ = [
     inputs=[ ( 'Netwitness', IPv4Address ) ],
     debug=True
 )
-
-def dotransform(request, response):
-
-    #nwmodule.nw_http_auth()
+def dotransform(request, response, config):
 
     # NW REST API Query and results
 

@@ -28,10 +28,7 @@ __all__ = [
     inputs=[ ( 'Netwitness', NWFiletype ), ('Netwitness', Phrase) ],
     debug=True
 )
-
-def dotransform(request, response):
-
-    #nwmodule.nw_http_auth()
+def dotransform(request, response, config):
 
     # NW REST API Query amd results
 
