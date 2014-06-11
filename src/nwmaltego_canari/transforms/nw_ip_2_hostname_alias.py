@@ -25,7 +25,7 @@ __all__ = [
     description='Returns hostname alias associated with the specified IP address from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessIPToHostname_Netwitness' ],
     inputs=[ ( 'Netwitness', IPv4Address ) ],
-    debug=False
+    debug=True
 )
 
 def dotransform(request, response):

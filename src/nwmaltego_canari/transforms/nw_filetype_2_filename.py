@@ -26,7 +26,7 @@ __all__ = [
     description='Returns file names associated with the specified file type from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessFiletypeToFileName_Netwitness' ],
     inputs=[ ( 'Netwitness', NWFiletype ) ],
-    debug=False
+    debug=True
 )
 def dotransform(request, response):
 
