@@ -96,7 +96,7 @@ def nwQuery(id1, id2, query_string, cType, size):
     nwa = config['netwitness/nw_concentrator']
 
     base_uri = "/sdk?msg=query&"
-    params_dic = {'force-content-type': cType, 'expiry': 600, 'id1': id1, 'id2': id2, 'size': size,
+    params_dic = {'force-content-type': cType, 'expiry': 0, 'id1': id1, 'id2': id2, 'size': size,
                   'query': query_string}
 
     enc_params = urllib.urlencode(params_dic)
@@ -115,7 +115,7 @@ def nwSession(id1, id2, cType):
     nwa = config['netwitness/nw_concentrator']
 
     base_uri = "/sdk?msg=session&"
-    params_dic = {'force-content-type': cType, 'expiry': 600, 'id1': id1, 'id2': id2}
+    params_dic = {'force-content-type': cType, 'expiry': 0, 'id1': id1, 'id2': id2}
 
     enc_params = urllib.urlencode(params_dic)
     full_url = nwa + base_uri + enc_params
@@ -138,7 +138,7 @@ def nwValue(id1, id2, size, fieldname, cType, where=''):
 
     nwa = config['netwitness/nw_concentrator']
     base_uri = "/sdk?msg=values&"
-    params_dic = {'force-content-type': cType, 'expiry': 600, 'id1': id1, 'id2': id2, 'size': size,
+    params_dic = {'force-content-type': cType, 'expiry': 0, 'id1': id1, 'id2': id2, 'size': size,
                   'fieldName': fieldname, 'where': where}
 
     enc_params = urllib.urlencode(params_dic)
@@ -157,7 +157,7 @@ def nwTimeline(time1, time2, size, cType, where=''):
 
     nwa = config['netwitness/nw_concentrator']
     base_uri = "/sdk?msg=timeline&"
-    params_dic = {'force-content-type': cType, 'expiry': 600, 'time1': time1, 'time2': time2, 'size': size,
+    params_dic = {'force-content-type': cType, 'expiry': 0, 'time1': time1, 'time2': time2, 'size': size,
                   'where': where}
 
     enc_params = urllib.urlencode(params_dic)
@@ -175,7 +175,7 @@ def nwLanguage(cType):
 
     nwa = config['netwitness/nw_concentrator']
     base_uri = "/sdk?msg=language&"
-    params_dic = {'force-content-type': cType, 'expiry': 600, 'size': 200}
+    params_dic = {'force-content-type': cType, 'expiry': 0, 'size': 200}
 
     enc_params = urllib.urlencode(params_dic)
     full_url = nwa + base_uri + enc_params

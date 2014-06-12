@@ -35,7 +35,7 @@ def dotransform(request, response, config):
     diff = nwmodule.nwtime(config['netwitness/days'])
     query = 'select ip.dst where (time=%s) && ip.src=%s' % (diff, ip_entity)
 
-    json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 10))
+    json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 2500))
     ip_list = []
 
     for d in json_data['results']['fields']:

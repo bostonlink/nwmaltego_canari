@@ -25,7 +25,7 @@ __all__ = [
     description='Returns hostname alias associated with the specified IP address from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessIPToHostname_Netwitness' ],
     inputs=[ ( 'Netwitness', IPv4Address ) ],
-    debug=True
+    debug=False
 )
 def dotransform(request, response, config):
 
@@ -36,7 +36,7 @@ def dotransform(request, response, config):
     field_name = 'alias.host'
     where_clause = '(time=%s) && ip.src=%s || ip.dst=%s' % (diff, ip_entity, ip_entity)
 
-    json_data = json.loads(nwmodule.nwValue(0, 0, 25, field_name, 'application/json', where_clause))
+    json_data = json.loads(nwmodule.nwValue(0, 0, 250, field_name, 'application/json', where_clause))
     host_list = []
 
     for d in json_data['results']['fields']:

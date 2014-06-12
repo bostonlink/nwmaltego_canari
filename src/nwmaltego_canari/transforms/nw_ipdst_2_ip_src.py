@@ -25,7 +25,7 @@ __all__ = [
     description='Returns IP source addresses associated with the specified IP address from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessIPdstToIPsrc_Netwitness' ],
     inputs=[ ( 'Netwitness', IPv4Address ) ],
-    debug=True
+    debug=False
 )
 def dotransform(request, response, config):
 
@@ -35,7 +35,7 @@ def dotransform(request, response, config):
     diff = nwmodule.nwtime(config['netwitness/days'])
     query = 'select ip.src where (time=%s) && ip.dst=%s' % (diff, ip_entity)
 
-    json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 10))
+    json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 2500))
     ip_list = []
 
     for d in json_data['results']['fields']:

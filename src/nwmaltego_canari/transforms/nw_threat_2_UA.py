@@ -41,7 +41,7 @@ def dotransform(request, response, config):
         where_clause = '(time=%s) && risk.warning="%s"' % (diff, risk_name)
 
     field_name = 'client'
-    json_data = json.loads(nwmodule.nwValue(0, 0, 10, field_name, 'application/json', where_clause))
+    json_data = json.loads(nwmodule.nwValue(0, 0, 100, field_name, 'application/json', where_clause))
     ip_list = []
 
     for d in json_data['results']['fields']:

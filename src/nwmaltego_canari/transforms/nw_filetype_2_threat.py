@@ -26,7 +26,7 @@ __all__ = [
     description='Returns threats associated with the specified file type from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessFileTypeToThreat_Netwitness', 'netwitness.v2.NetwitnessFileTypePhraseToThreat_Netwitness' ],
     inputs=[ ( 'Netwitness', NWFiletype ), ('Netwitness', Phrase) ],
-    debug=True
+    debug=False
 )
 def dotransform(request, response, config):
 
@@ -37,7 +37,7 @@ def dotransform(request, response, config):
     field_name = 'risk.warning'
     where_clause = '(time=%s) && filetype="%s"' % (diff, file_type)
 
-    json_data = json.loads(nwmodule.nwValue(0, 0, 25, field_name, 'application/json', where_clause))
+    json_data = json.loads(nwmodule.nwValue(0, 0, 250, field_name, 'application/json', where_clause))
     threat_list = []
 
     for d in json_data['results']['fields']:

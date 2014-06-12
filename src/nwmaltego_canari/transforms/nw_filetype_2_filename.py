@@ -26,7 +26,7 @@ __all__ = [
     description='Returns file names associated with the specified file type from Netwitness.',
     uuids=[ 'netwitness.v2.NetwitnessFiletypeToFileName_Netwitness' ],
     inputs=[ ( 'Netwitness', NWFiletype ) ],
-    debug=True
+    debug=False
 )
 def dotransform(request, response, config):
     # NW REST API Query and results
@@ -36,7 +36,7 @@ def dotransform(request, response, config):
     field_name = 'filename'
     where_clause = '(time=%s) && filetype="%s"' % (diff, file_type)
 
-    json_data = json.loads(nwmodule.nwValue(0, 0, 25, field_name, 'application/json', where_clause))
+    json_data = json.loads(nwmodule.nwValue(0, 0, 250, field_name, 'application/json', where_clause))
     file_list = []
 
     for d in json_data['results']['fields']:

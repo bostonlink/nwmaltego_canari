@@ -41,7 +41,7 @@ def dotransform(request, response, config):
     else:
         query = 'select ip.dst where (time=%s) && risk.warning="%s"' % (diff, risk_name)
 
-    json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 10))
+    json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 2500))
     ip_list = []
 
     for d in json_data['results']['fields']:

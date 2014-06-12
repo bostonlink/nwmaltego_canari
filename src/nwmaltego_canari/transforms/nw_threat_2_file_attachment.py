@@ -41,7 +41,7 @@ def dotransform(request, response, config):
         where_clause = '(time=%s) && risk.warning="%s"' % (diff, risk_name)
 
     field_name = 'attachment'
-    json_data = json.loads(nwmodule.nwValue(0, 0, 25, field_name, 'application/json', where_clause))
+    json_data = json.loads(nwmodule.nwValue(0, 0, 250, field_name, 'application/json', where_clause))
     file_list = []
 
     for d in json_data['results']['fields']:

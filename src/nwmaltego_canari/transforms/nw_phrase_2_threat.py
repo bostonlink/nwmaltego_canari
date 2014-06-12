@@ -36,7 +36,7 @@ def dotransform(request, response, config):
     diff = nwmodule.nwtime(config['netwitness/days'])
     query = 'select risk.warning where (time=%s) && risk.warning contains %s' % (diff, phrase)
 
-    json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 25))
+    json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 2500))
     threat_list = []
 
     for d in json_data['results']['fields']:
