@@ -33,7 +33,7 @@ def get_creds():
                     return
 
                 nwu, nwp = fv
-                f.write('username=%s#password=%s' % (nwu, nwp))
+                f.write('username %s#password %s' % (nwu, nwp))
                 break
 
     else:
@@ -42,10 +42,10 @@ def get_creds():
             creds = f.read().split('#')
             for i in creds:
                 if 'username' in i:
-                    parse = i.split('=')
+                    parse = i.split()
                     nwu = parse[1]
                 if 'password' in i:
-                    parse = i.split('=')
+                    parse = i.split()
                     nwp = parse[1]
 
     return nwu, nwp
@@ -89,7 +89,7 @@ def nwtime(days):
 
 def nwQuery(id1, id2, query_string, cType, size):
 
-    """ Queries the NW REST API and returns the results 
+    """ Queries the NW REST API and returns the results
     Example query that would be passed to the function in the query_string variable:
     query = 'select service,ip.src,country.dst where service=80'"""
 
