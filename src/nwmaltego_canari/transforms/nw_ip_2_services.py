@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import json
-from common.entities import NWThreat
-from canari.maltego.entities import IPv4Address
+from canari.maltego.message import Field
+from canari.maltego.entities import IPv4Address, Service
 from canari.framework import configure
 from canari.config import config
 from common import nwmodule
@@ -22,27 +22,21 @@ __all__ = [
 ]
 
 @configure(
-    label='Threat To IP Destination [Netwitness]',
-    description='Returns IP destination addresses associated with the specified threat from Netwitness.',
-    uuids=[ 'netwitness.v2.NetwitnessThreattoIPdst_Netwitness' ],
-    inputs=[ ( 'Netwitness', NWThreat ) ],
+    label='IP To Services [Netwitness]',
+    description='Returns services associated with the specified IP address from Netwitness.',
+    uuids=['netwitness.v2.NetwitnessIPToServices_Netwitness'],
+    inputs=[('Netwitness', IPv4Address)],
     debug=False
 )
 def dotransform(request, response, config):
 
     # NW REST API Query and results
 
-    risk_name = request.value
+    ip_entity = request.value
     diff = nwmodule.nwtime(config['netwitness/days'])
-
-    if 'ip' in request.fields:
-        ip = request.fields['ip']
-        query = 'select ip.dst where (time=%s) && risk.warning="%s" && ip.src=%s' % (diff, risk_name, ip)
-    else:
-        query = 'select ip.dst where (time=%s) && risk.warning="%s"' % (diff, risk_name)
-
+    query = 'select service where (time=%s) && (ip.dst=%s || ip.src=%s)' % (diff, ip_entity, ip_entity)
     json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 2500))
-    ip_list = []
+    service_list = []
 
     for d in json_data['results']['fields']:
         count = 1
@@ -50,8 +44,12 @@ def dotransform(request, response, config):
             if d['value'] == a['value']:
                 count += 1
 
-        if d['value'] not in ip_list:
-            response += IPv4Address(d['value'].decode('ascii'), weight=count)
-            ip_list.append(d['value'])
+        if d['value'] not in service_list:
+            e = Service(d['value'].decode('ascii'), weight=count)
+            e += Field("ip", ip_entity, displayname='IP Address')
+            response += e
+            service_list.append(d['value'])
+
+        count = 0
 
     return response

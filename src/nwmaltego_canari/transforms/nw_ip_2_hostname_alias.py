@@ -34,13 +34,13 @@ def dotransform(request, response, config):
     ip_entity = request.value
     diff = nwmodule.nwtime(config['netwitness/days'])
     field_name = 'alias.host'
-    where_clause = '(time=%s) && ip.src=%s || ip.dst=%s' % (diff, ip_entity, ip_entity)
+    where_clause = '(time=%s) && (ip.src=%s || ip.dst=%s)' % (diff, ip_entity, ip_entity)
 
     json_data = json.loads(nwmodule.nwValue(0, 0, 250, field_name, 'application/json', where_clause))
     host_list = []
 
     for d in json_data['results']['fields']:
         if d['value'] not in host_list:
-            response += Domain(d['value'].decode('ascii'))
+            response += Domain(d['value'].decode('ascii'), weight=d['count'])
 
     return response

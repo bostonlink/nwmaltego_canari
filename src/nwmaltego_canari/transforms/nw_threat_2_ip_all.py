@@ -40,8 +40,13 @@ def dotransform(request, response, config):
     ip_list = []
 
     for d in json_data['results']['fields']:
+        count = 1
+        for a in json_data['results']['fields']:
+            if d['value'] == a['value']:
+                count += 1
+
         if d['value'] not in ip_list:
-            response += IPv4Address(d['value'].decode('ascii'))
+            response += IPv4Address(d['value'].decode('ascii'), weight=count)
             ip_list.append(d['value'])
 
     return response

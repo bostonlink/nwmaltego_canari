@@ -8,7 +8,7 @@ from canari.maltego.entities import EntityField, Entity
 @EntityField(name='type', propname='type_', displayname='Type')
 @EntityField(name='count', propname='count', displayname='Count')
 class NetwitnessEntity(Entity):
-    namespace = 'netwitness'
+    _namespace_ = 'netwitness'
 
 
 @EntityField(name='filetype', propname='filetype', displayname='File Type')
@@ -32,3 +32,9 @@ class NWThreat(NetwitnessEntity):
     pass
 
 
+class NWMetakey(NetwitnessEntity):
+    pass
+
+
+class NWAction(NetwitnessEntity):
+    pass

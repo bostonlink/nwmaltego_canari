@@ -36,7 +36,7 @@ def dotransform(request, response, config):
 
     if 'ip' in request.fields:
         ip = request.fields['ip']
-        where_clause = '(time=%s) && risk.warning="%s" && ip.src=%s || ip.dst=%s' % (diff, risk_name, ip, ip)
+        where_clause = '(time=%s) && risk.warning="%s" && (ip.src=%s || ip.dst=%s)' % (diff, risk_name, ip, ip)
     else:
         where_clause = '(time=%s) && risk.warning="%s"' % (diff, risk_name)
 
@@ -52,7 +52,8 @@ def dotransform(request, response, config):
                 metaid1=d['id1'],
                 metaid2=d['id2'],
                 type_=d['type'],
-                count=d['count']
+                count=d['count'],
+                weight=d['count']
             )
             file_list.append(d['value'])
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import json
-from common.entities import NWThreat
-from canari.maltego.entities import IPv4Address
+from canari.maltego.entities import Phrase
+from common.entities import NWMetakey
 from canari.framework import configure
 from canari.config import config
 from common import nwmodule
@@ -22,27 +22,22 @@ __all__ = [
 ]
 
 @configure(
-    label='Threat To IP Destination [Netwitness]',
-    description='Returns IP destination addresses associated with the specified threat from Netwitness.',
-    uuids=[ 'netwitness.v2.NetwitnessThreattoIPdst_Netwitness' ],
-    inputs=[ ( 'Netwitness', NWThreat ) ],
+    label='Phrase To MetaKeys [Netwitness]',
+    description='Returns meta of metakey within the specified phrase from Netwitness.',
+    uuids=[ 'netwitness.v2.NetwitnessPhrasetoMeta_Netwitness' ],
+    inputs=[ ( 'Netwitness', Phrase ) ],
     debug=False
 )
 def dotransform(request, response, config):
 
     # NW REST API Query and results
 
-    risk_name = request.value
+    phrase = request.value
     diff = nwmodule.nwtime(config['netwitness/days'])
-
-    if 'ip' in request.fields:
-        ip = request.fields['ip']
-        query = 'select ip.dst where (time=%s) && risk.warning="%s" && ip.src=%s' % (diff, risk_name, ip)
-    else:
-        query = 'select ip.dst where (time=%s) && risk.warning="%s"' % (diff, risk_name)
+    query = 'select %s where (time=%s) && %s exists' % (phrase, diff, phrase)
 
     json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 2500))
-    ip_list = []
+    meta_list = []
 
     for d in json_data['results']['fields']:
         count = 1
@@ -50,8 +45,13 @@ def dotransform(request, response, config):
             if d['value'] == a['value']:
                 count += 1
 
-        if d['value'] not in ip_list:
-            response += IPv4Address(d['value'].decode('ascii'), weight=count)
-            ip_list.append(d['value'])
+        if d['value'] not in meta_list:
+            response += NWMetakey(
+                d['value'].decode('ascii'),
+                weight=count)
+
+            meta_list.append(d['value'])
+
+        count = 0
 
     return response

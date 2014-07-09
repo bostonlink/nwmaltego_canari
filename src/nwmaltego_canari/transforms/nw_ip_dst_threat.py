@@ -48,7 +48,8 @@ def dotransform(request, response, config):
                 metaid1=d['id1'],
                 metaid2=d['id2'],
                 type_=d['type'],
-                count=d['count']
+                count=d['count'],
+                weight=d['count']
             )
             threat_list.append(d['value'])
 

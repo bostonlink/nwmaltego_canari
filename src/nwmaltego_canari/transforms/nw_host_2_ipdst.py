@@ -1,8 +1,7 @@
 #!/usr/bin/env python
 
 import json
-from common.entities import NWThreat
-from canari.maltego.entities import IPv4Address
+from canari.maltego.entities import Domain, IPv4Address
 from canari.framework import configure
 from canari.config import config
 from common import nwmodule
@@ -22,24 +21,19 @@ __all__ = [
 ]
 
 @configure(
-    label='Threat To IP Destination [Netwitness]',
-    description='Returns IP destination addresses associated with the specified threat from Netwitness.',
-    uuids=[ 'netwitness.v2.NetwitnessThreattoIPdst_Netwitness' ],
-    inputs=[ ( 'Netwitness', NWThreat ) ],
+    label='Hostname Alias To IP destination [Netwitness]',
+    description='Returns IP destination addresses associated with the alias.host from Netwitness.',
+    uuids=[ 'netwitness.v2.NetwitnessHostnameToIPdst_Netwitness' ],
+    inputs=[ ( 'Netwitness', Domain ) ],
     debug=False
 )
 def dotransform(request, response, config):
 
     # NW REST API Query and results
 
-    risk_name = request.value
+    ip_entity = request.value
     diff = nwmodule.nwtime(config['netwitness/days'])
-
-    if 'ip' in request.fields:
-        ip = request.fields['ip']
-        query = 'select ip.dst where (time=%s) && risk.warning="%s" && ip.src=%s' % (diff, risk_name, ip)
-    else:
-        query = 'select ip.dst where (time=%s) && risk.warning="%s"' % (diff, risk_name)
+    query = 'select ip.dst where (time=%s) && alias.host=%s' % (diff, ip_entity)
 
     json_data = json.loads(nwmodule.nwQuery(0, 0, query, 'application/json', 2500))
     ip_list = []
@@ -53,5 +47,7 @@ def dotransform(request, response, config):
         if d['value'] not in ip_list:
             response += IPv4Address(d['value'].decode('ascii'), weight=count)
             ip_list.append(d['value'])
+
+        count = 0
 
     return response

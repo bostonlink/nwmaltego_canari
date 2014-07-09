@@ -75,7 +75,7 @@ def get_http(full_url, nwu, nwpass):
 # function that adds date and time to queries
 
 def nwtime(days):
-    date_t = datetime.today()
+    date_t = datetime.utcnow()
     tdelta = timedelta(days=days)
     diff = date_t - tdelta
     diff = "'" + diff.strftime('%Y-%b-%d %H:%M:%S') + "'-'" + date_t.strftime('%Y-%b-%d %H:%M:%S') + "'"

@@ -30,5 +30,15 @@ __all__ = [
     'nw_threat_2_ip_dst',
     'nw_threat_2_ip_src',
     'nw_threat_2_UA',
-    'nw_launcher_win'
+    'nw_launcher_win',
+    'nw_action_2_entitysrc',
+    'nw_action_2_entitydst',
+    'nw_host_2_ipdst',
+    'nw_host_2_ipsrc',
+    'nw_host_2_services',
+    'nw_ip_2_services',
+    'nw_phrase_2_meta',
+    'nw_service_2_action',
+    'nw_service_2_ipsrc',
+    'nw_service_2_ipdst'
 ]

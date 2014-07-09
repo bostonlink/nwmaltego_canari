@@ -40,14 +40,22 @@ def dotransform(request, response, config):
     threat_list = []
 
     for d in json_data['results']['fields']:
+        count = 1
+        for a in json_data['results']['fields']:
+            if d['value'] == a['value']:
+                count += 1
+
         if d['value'] not in threat_list:
             response += NWThreat(
                 d['value'].decode('ascii'),
                 metaid1=d['id1'],
                 metaid2=d['id2'],
                 type_=d['type'],
-                count=d['count']
+                count=d['count'],
+                weight=count
             )
             threat_list.append(d['value'])
+
+        count = 0
 
     return response

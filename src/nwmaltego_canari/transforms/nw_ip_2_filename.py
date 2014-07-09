@@ -35,7 +35,7 @@ def dotransform(request, response, config):
     ip_entity = request.value
     diff = nwmodule.nwtime(config['netwitness/days'])
     field_name = 'filename'
-    where_clause = '(time=%s) && ip.src=%s || ip.dst=%s' % (diff, ip_entity, ip_entity)
+    where_clause = '(time=%s) && (ip.src=%s || ip.dst=%s)' % (diff, ip_entity, ip_entity)
 
     json_data = json.loads(nwmodule.nwValue(0, 0, 250, field_name, 'application/json', where_clause))
     file_list = []
@@ -48,7 +48,8 @@ def dotransform(request, response, config):
                 metaid1=d['id1'],
                 metaid2=d['id2'],
                 type_=d['type'],
-                count=d['count']
+                count=d['count'],
+                weight=d['count']
             )
             file_list.append(d['value'])
 
